@@ -1,0 +1,20 @@
+<% if (typeof user !== 'undefined' && user && settings.layout_nav_position !== 'top') { %>
+  <%- include('partials/nav') %>
+<% } %>
+<% if (settings.show_footer !== '0') { %>
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><i data-lucide="hexagon" class="w-5 h-5"></i><span><%= settings.shop_name %></span></div>
+        <p class="footer-text"><%= settings.shop_description %></p>
+      </div>
+    </div>
+    <div class="footer-bottom"><p><%= settings.footer_text %></p></div>
+  </div>
+</footer>
+<% } %>
+<script>lucide.createIcons();<% if (flash.success&&flash.success.length) %>flashSuccess('<%= flash.success[0] %>');<% if (flash.error&&flash.error.length) %>flashError('<%= flash.error[0] %>');</script>
+<script src="/js/app.js"></script>
+</body>
+</html>
