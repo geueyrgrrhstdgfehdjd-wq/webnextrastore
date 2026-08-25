@@ -1,0 +1,36 @@
+<%- include('../partials/header') %>
+<div class="max-w-6xl mx-auto px-4 py-6">
+  <h1 class="text-2xl font-bold mb-6">ตั้งค่าสินค้า</h1>
+  <div class="card p-6 mb-6">
+    <h2 class="text-lg font-bold mb-4">เพิ่มสินค้า</h2>
+    <form action="/admin/products/add" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <input type="text" name="name" required placeholder="ชื่อ" class="input">
+      <input type="number" name="price" required placeholder="ราคา" class="input" step="0.01">
+      <textarea name="description" placeholder="รายละเอียด" class="input md:col-span-2" rows="2"></textarea>
+      <input type="number" name="stock" placeholder="สต็อก" value="0" class="input">
+      <select name="category_id" class="input"><option value="">-- ไม่มีหมวด --</option><% categories.forEach(c => { %><option value="<%= c.id %>"><%= c.name %></option><% }); %></select>
+      <input type="number" name="sort_order" value="0" class="input">
+      <input type="file" name="image" accept="image/*" class="input">
+      <button type="submit" class="btn-primary md:col-span-2">เพิ่มสินค้า</button>
+    </form>
+  </div>
+  <% products.forEach(p => { %>
+    <div class="card p-4 mb-3">
+      <form action="/admin/products/edit/<%= p.id %>" method="POST" enctype="multipart/form-data" class="grid grid-cols-2 md:grid-cols-4 gap-2">
+        <input type="text" name="name" value="<%= p.name %>" class="input text-sm" required>
+        <input type="number" name="price" value="<%= p.price %>" class="input text-sm" step="0.01" required>
+        <input type="number" name="stock" value="<%= p.stock %>" class="input text-sm">
+        <input type="text" name="description" value="<%= p.description||'' %>" class="input text-sm md:col-span-2">
+        <select name="category_id" class="input text-sm"><option value="">--</option><% categories.forEach(c => { %><option value="<%= c.id %>" <%=p.category_id===c.id?'selected':''%>><%= c.name %></option><% }); %></select>
+        <input type="number" name="sort_order" value="<%= p.sort_order %>" class="input text-sm">
+        <select name="status" class="input text-sm"><option value="open" <%=p.status==='open'?'selected':''%>>เปิดขาย</option><option value="closed" <%=p.status==='closed'?'selected':''%>>ปิดขาย</option></select>
+        <input type="file" name="image" accept="image/*" class="input text-sm">
+        <div class="col-span-2 md:col-span-4 flex gap-2">
+          <button type="submit" class="btn-primary text-sm flex-1">บันทึก</button>
+          <button type="button" onclick="if(confirm('ลบ?')){const f=document.createElement('form');f.method='POST';f.action='/admin/products/delete/<%= p.id %>';document.body.appendChild(f);f.submit();}" class="btn-danger text-sm">ลบ</button>
+        </div>
+      </form>
+    </div>
+  <% }); %>
+</div>
+<%- include('../partials/footer') %>
