@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+<div class="max-w-4xl mx-auto px-4 py-6 pb-24">
+  <div class="card p-6 mb-6">
+    <div class="flex items-start gap-4">
+      <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center flex-shrink-0"><i data-lucide="user" class="w-10 h-10 text-white"></i></div>
+      <div class="flex-1">
+        <h1 class="text-2xl font-bold flex items-center gap-2"><%= user.username %><% if (user.role==='admin') { %><span class="px-2 py-0.5 text-xs rounded-full bg-red-500/20 text-red-400">ADMIN</span><% } %></h1>
+        <p class="text-gray-400 text-sm mt-2"><%= user.bio||'ไม่มีข้อมูล' %></p>
+      </div>
+    </div>
+    <div class="grid grid-cols-3 gap-3 mt-6">
+      <div class="stat-card"><div class="text-lg font-bold">฿<%= user.balance.toFixed(2) %></div><div class="text-xs text-gray-500">ยอดเงิน</div></div>
+      <div class="stat-card"><div class="text-lg font-bold">฿<%= (user.total_spent||0).toFixed(2) %></div><div class="text-xs text-gray-500">ซื้อไป</div></div>
+      <div class="stat-card"><div class="text-lg font-bold"><%= orders.length %></div><div class="text-xs text-gray-500">คำสั่งซื้อ</div></div>
+    </div>
+  </div>
+  <div class="card p-6 mb-6">
+    <h2 class="text-lg font-bold mb-4">แก้ไขโปรไฟล์</h2>
+    <form action="/profile/update" method="POST">
+      <textarea name="bio" rows="3" class="input mb-4"><%= user.bio||'' %></textarea>
+      <button type="submit" class="btn-primary"><i data-lucide="save" class="w-4 h-4"></i><span>บันทึก</span></button>
+    </form>
+  </div>
+  <div class="card p-6">
+    <h2 class="text-lg font-bold mb-4">ประวัติการซื้อ</h2>
+    <% if (orders.length===0) { %><p class="text-gray-500 text-sm text-center py-6">ยังไม่มี</p><% } else { %>
+      <div class="space-y-2"><% orders.forEach(o => { %><div class="flex items-center gap-3 p-3 rounded-lg bg-white/5"><div class="flex-1"><p class="text-sm font-medium truncate"><%= o.product_name %></p><p class="text-xs text-gray-500"><%= new Date(o.created_at).toLocaleString('th-TH') %></p></div><span class="text-purple-400 text-sm">-฿<%= o.total_price.toFixed(2) %></span></div><% }); %></div>
+    <% } %>
+  </div>
+  <div class="text-center mt-6"><a href="/logout" class="text-red-400 text-sm">ออกจากระบบ</a></div>
+</div>
+<%- include('partials/footer') %>
