@@ -1,12 +1,10 @@
 services:
   - type: web
     name: nextrastore
-    runtime: node
+    runtime: docker
     plan: starter
     region: singapore
     branch: main
-    buildCommand: npm install && npm rebuild better-sqlite3 && npm run seed
-    startCommand: node server.js
     healthCheckPath: /
     disk:
       name: nextrastore-data
@@ -19,5 +17,3 @@ services:
         generateValue: true
       - key: DATA_DIR
         value: /opt/render/project/src/data
-      - key: NODE_VERSION
-        value: 20.10.0
