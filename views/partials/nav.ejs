@@ -1,0 +1,9 @@
+<nav class="nav-bottom">
+  <div class="nav-bottom-inner">
+    <a href="/shop" class="nav-item <%= req.path==='/shop'?'active':'' %>"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span>ร้านค้า</span></a>
+    <a href="/topup" class="nav-item <%= req.path==='/topup'?'active':'' %>"><i data-lucide="wallet" class="w-5 h-5"></i><span>เติมเงิน</span></a>
+    <a href="/contact" class="nav-item <%= req.path==='/contact'?'active':'' %>"><i data-lucide="message-circle" class="w-5 h-5"></i><span>ติดต่อ</span></a>
+    <a href="/profile" class="nav-item <%= req.path==='/profile'?'active':'' %>"><i data-lucide="user" class="w-5 h-5"></i><span>โปรไฟล์</span></a>
+    <% if (isAdmin) { %><a href="/admin" class="nav-item <%= req.path.startsWith('/admin')?'active':'' %>"><i data-lucide="shield" class="w-5 h-5"></i><span>แอดมิน</span></a><% } %>
+  </div>
+</nav>
