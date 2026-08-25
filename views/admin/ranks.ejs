@@ -1,0 +1,33 @@
+<%- include('../partials/header') %>
+<div class="max-w-4xl mx-auto px-4 py-6">
+  <h1 class="text-2xl font-bold mb-6">ตั้งค่ายศ</h1>
+  <div class="card p-6 mb-6">
+    <h2 class="text-lg font-bold mb-4">เพิ่มยศ</h2>
+    <form action="/admin/ranks/add" method="POST" class="grid grid-cols-2 md:grid-cols-3 gap-3">
+      <input type="text" name="name" required placeholder="ชื่อยศ" class="input">
+      <input type="number" name="discount" placeholder="ส่วนลด %" value="0" class="input">
+      <input type="color" name="badge_color" value="#8b5cf6" class="input h-10">
+      <input type="text" name="icon" placeholder="icon lucide" value="crown" class="input">
+      <input type="number" name="min_spent" placeholder="ซื้อขั้นต่ำ" value="0" class="input">
+      <input type="number" name="sort_order" value="0" class="input">
+      <button type="submit" class="btn-primary col-span-2 md:col-span-3">เพิ่มยศ</button>
+    </form>
+  </div>
+  <% ranks.forEach(r => { %>
+    <div class="card p-4 mb-3">
+      <form action="/admin/ranks/edit/<%= r.id %>" method="POST" class="grid grid-cols-2 md:grid-cols-6 gap-2">
+        <input type="text" name="name" value="<%= r.name %>" class="input text-sm">
+        <input type="number" name="discount" value="<%= r.discount %>" class="input text-sm">
+        <input type="color" name="badge_color" value="<%= r.badge_color %>" class="input h-9">
+        <input type="text" name="icon" value="<%= r.icon %>" class="input text-sm">
+        <input type="number" name="min_spent" value="<%= r.min_spent %>" class="input text-sm">
+        <input type="number" name="sort_order" value="<%= r.sort_order %>" class="input text-sm">
+        <div class="col-span-2 md:col-span-6 flex gap-2">
+          <button type="submit" class="btn-primary text-sm flex-1">บันทึก</button>
+          <button type="button" onclick="if(confirm('ลบ?')){const f=document.createElement('form');f.method='POST';f.action='/admin/ranks/delete/<%= r.id %>';document.body.appendChild(f);f.submit();}" class="btn-danger text-sm">ลบ</button>
+        </div>
+      </form>
+    </div>
+  <% }); %>
+</div>
+<%- include('../partials/footer') %>
