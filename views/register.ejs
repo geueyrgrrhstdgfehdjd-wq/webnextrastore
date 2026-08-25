@@ -1,0 +1,16 @@
+<%- include('partials/header') %>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-icon"><i data-lucide="user-plus" class="w-8 h-8 text-white"></i></div>
+    <h1 class="auth-title">สมัครสมาชิก</h1>
+    <p class="auth-subtitle">สร้างบัญชีใหม่</p>
+    <form action="/register" method="POST" class="auth-form">
+      <input type="text" name="username" required minlength="3" class="input" placeholder="ชื่อผู้ใช้ 3+ ตัว">
+      <input type="password" name="password" required minlength="4" class="input" placeholder="รหัสผ่าน 4+ ตัว">
+      <input type="password" name="confirm" required class="input" placeholder="ยืนยันรหัสผ่าน">
+      <button type="submit" class="btn-primary w-full justify-center"><i data-lucide="user-plus" class="w-4 h-4"></i><span>สมัครสมาชิก</span></button>
+    </form>
+    <p class="auth-footer">มีบัญชีแล้ว? <a href="/login">เข้าสู่ระบบ</a></p>
+  </div>
+</div>
+<%- include('partials/footer') %>
