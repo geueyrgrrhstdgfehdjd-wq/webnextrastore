@@ -1,9 +1,8 @@
 node_modules/
-data/
-*.db
-*.db-shm
-*.db-wal
 .env
+*.db
+*.sqlite
+*.sqlite3
+/opt/render/project/src/data/*
 .DS_Store
-public/uploads/*
-!public/uploads/.gitkeep
+*.log
