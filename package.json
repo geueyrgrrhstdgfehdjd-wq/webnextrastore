@@ -1,0 +1,28 @@
+{
+  "name": "nextrastore",
+  "version": "1.0.0",
+  "description": "nextrastore - ร้านค้าออนไลน์ + ระบบเติมเงิน TrueMoney",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node seed.js",
+    "dev": "nodemon server.js",
+    "reset-admin": "node scripts/reset-admin.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "ejs": "^3.1.10",
+    "better-sqlite3": "^11.3.0",
+    "bcryptjs": "^2.4.3",
+    "express-session": "^1.18.0",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "^2.7.0",
+    "connect-flash": "^0.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
