@@ -1,0 +1,93 @@
+<%- include('../partials/header') %>
+<div class="max-w-6xl mx-auto px-4 py-6">
+  <h1 class="text-2xl font-bold mb-6 flex items-center gap-2"><i data-lucide="settings-2" class="w-6 h-6 text-purple-400"></i>ตั้งค่าระบบเว็บ</h1>
+  <form action="/admin/web-settings" method="POST">
+    <div class="settings-tabs">
+      <button type="button" class="settings-tab active" data-tab="general"><i data-lucide="store" class="w-4 h-4"></i>ทั่วไป</button>
+      <button type="button" class="settings-tab" data-tab="colors"><i data-lucide="palette" class="w-4 h-4"></i>สี</button>
+      <button type="button" class="settings-tab" data-tab="product"><i data-lucide="package" class="w-4 h-4"></i>กรอบสินค้า</button>
+      <button type="button" class="settings-tab" data-tab="effects"><i data-lucide="sparkles" class="w-4 h-4"></i>เอฟเฟค</button>
+      <button type="button" class="settings-tab" data-tab="display"><i data-lucide="layout" class="w-4 h-4"></i>การแสดงผล</button>
+    </div>
+
+    <div class="settings-panel active" data-panel="general">
+      <div class="card p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div><label class="block text-sm mb-1">ชื่อร้าน</label><input type="text" name="shop_name" value="<%= settings.shop_name %>" class="input"></div>
+        <div><label class="block text-sm mb-1">สถานะ</label><select name="shop_status" class="input"><option value="open" <%=settings.shop_status==='open'?'selected':''%>>เปิด</option><option value="closed" <%=settings.shop_status==='closed'?'selected':''%>>ปิด</option></select></div>
+        <div class="md:col-span-2"><label class="block text-sm mb-1">คำอธิบาย</label><textarea name="shop_description" class="input" rows="2"><%= settings.shop_description %></textarea></div>
+        <div class="md:col-span-2"><label class="block text-sm mb-1">ประกาศ</label><input type="text" name="announcement" value="<%= settings.announcement %>" class="input"></div>
+        <div><label class="block text-sm mb-1">ฟอนต์</label><select name="font_family" class="input"><% ['Inter','Prompt','Kanit','Manrope','Sarabun'].forEach(f => { %><option value="<%= f %>" <%=settings.font_family===f?'selected':''%>><%= f %></option><% }); %></select></div>
+        <div><label class="block text-sm mb-1">เบอร์ TrueMoney</label><input type="text" name="truemoney_phone" value="<%= settings.truemoney_phone %>" class="input"></div>
+      </div>
+    </div>
+
+    <div class="settings-panel" data-panel="colors">
+      <div class="card p-6 grid grid-cols-2 md:grid-cols-3 gap-4">
+        <% ['primary_color','accent_color','secondary_color','bg_color','card_color','text_color','border_color','success_color','danger_color'].forEach(k => { %>
+          <div>
+            <label class="block text-sm mb-1"><%= k %></label>
+            <div class="color-input-wrap">
+              <input type="color" name="<%= k %>" value="<%= settings[k] %>" class="color-input">
+              <input type="text" name="<%= k %>" value="<%= settings[k] %>" class="input" maxlength="7">
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+
+    <div class="settings-panel" data-panel="product">
+      <div class="card p-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div><label class="block text-sm mb-1">Border Radius</label><input type="number" name="product_border_radius" value="<%= settings.product_border_radius %>" class="input"></div>
+        <div><label class="block text-sm mb-1">Shadow</label><select name="product_shadow" class="input"><option value="none">ไม่มี</option><option value="soft">นุ่ม</option><option value="medium" <%=settings.product_shadow==='medium'?'selected':''%>>กลาง</option><option value="glow">เรืองแสง</option></select></div>
+        <div><label class="block text-sm mb-1">Hover</label><select name="product_hover_effect" class="input"><option value="lift" <%=settings.product_hover_effect==='lift'?'selected':''%>>ยกขึ้น</option><option value="scale">ขยาย</option><option value="glow">เรืองแสง</option></select></div>
+        <div><label class="block text-sm mb-1">Cols Desktop</label><input type="number" name="product_columns_desktop" value="<%= settings.product_columns_desktop %>" class="input"></div>
+        <div><label class="block text-sm mb-1">Cols Tablet</label><input type="number" name="product_columns_tablet" value="<%= settings.product_columns_tablet %>" class="input"></div>
+        <div><label class="block text-sm mb-1">Cols Mobile</label><input type="number" name="product_columns_mobile" value="<%= settings.product_columns_mobile %>" class="input"></div>
+        <div class="col-span-2 md:col-span-4 grid grid-cols-2 gap-3">
+          <% [['product_show_stock','สต็อก'],['product_show_sold','ยอดขาย'],['product_show_price','ราคา'],['product_show_category','หมวด']].forEach(([k, l]) => { %>
+            <label class="toggle"><input type="checkbox" name="<%= k %>" value="1" <%=settings[k]==='1'?'checked':''%>><span class="toggle-slider"></span><span class="toggle-label"><%= l %></span></label>
+          <% }); %>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-panel" data-panel="effects">
+      <div class="card p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <% [['effect_glassmorphism','Glass'],['effect_glow','Glow'],['effect_animations','Animations'],['effect_hover_scale','Hover Scale'],['effect_gradient_bg','Gradient BG']].forEach(([k, l]) => { %>
+            <label class="toggle"><input type="checkbox" name="<%= k %>" value="1" <%=settings[k]==='1'?'checked':''%>><span class="toggle-slider"></span><span class="toggle-label"><%= l %></span></label>
+          <% }); %>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-panel" data-panel="display">
+      <div class="card p-6 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <% [['show_balance','ยอดเงิน'],['show_visits','สถิติ'],['show_announcement','ประกาศ'],['show_search','ค้นหา'],['show_footer','Footer'],['show_logo','โลโก้']].forEach(([k, l]) => { %>
+          <label class="toggle"><input type="checkbox" name="<%= k %>" value="1" <%=settings[k]==='1'?'checked':''%>><span class="toggle-slider"></span><span class="toggle-label"><%= l %></span></label>
+        <% }); %>
+      </div>
+    </div>
+
+    <div class="sticky-bottom mt-4">
+      <button type="submit" class="btn-primary w-full justify-center"><i data-lucide="save" class="w-4 h-4"></i><span>บันทึกทั้งหมด</span></button>
+    </div>
+  </form>
+</div>
+<script>
+document.querySelectorAll('.settings-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelector(`[data-panel="${tab.dataset.tab}"]`).classList.add('active');
+    lucide.createIcons();
+  });
+});
+document.querySelectorAll('.color-input-wrap').forEach(wrap => {
+  const color = wrap.querySelector('input[type=color]');
+  const text = wrap.querySelector('input[type=text]');
+  color.addEventListener('input', () => text.value = color.value);
+});
+</script>
+<%- include('../partials/footer') %>
