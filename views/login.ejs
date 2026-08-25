@@ -1,0 +1,15 @@
+<%- include('partials/header') %>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-icon"><i data-lucide="log-in" class="w-8 h-8 text-white"></i></div>
+    <h1 class="auth-title">เข้าสู่ระบบ</h1>
+    <p class="auth-subtitle">ยินดีต้อนรับกลับมา</p>
+    <form action="/login" method="POST" class="auth-form">
+      <input type="text" name="username" required class="input" placeholder="ชื่อผู้ใช้">
+      <input type="password" name="password" required class="input" placeholder="รหัสผ่าน">
+      <button type="submit" class="btn-primary w-full justify-center"><i data-lucide="log-in" class="w-4 h-4"></i><span>เข้าสู่ระบบ</span></button>
+    </form>
+    <p class="auth-footer">ยังไม่มีบัญชี? <a href="/register">สมัครสมาชิก</a></p>
+  </div>
+</div>
+<%- include('partials/footer') %>
