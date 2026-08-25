@@ -1,0 +1,14 @@
+<%- include('partials/header') %>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-icon"><i data-lucide="wallet" class="w-8 h-8 text-white"></i></div>
+    <h1 class="auth-title">เติมเงิน</h1>
+    <p class="auth-subtitle">TrueMoney Wallet</p>
+    <form action="/topup" method="POST" class="auth-form">
+      <input type="text" name="link" required class="input" placeholder="https://gift.truemoney.com/campaign/?v=...">
+      <button type="submit" class="btn-primary w-full justify-center"><i data-lucide="check-circle" class="w-4 h-4"></i><span>เติมเงิน</span></button>
+    </form>
+    <p class="auth-footer">ยอดเงิน: <span style="color:var(--primary);font-weight:700">฿<%= user.balance.toFixed(2) %></span></p>
+  </div>
+</div>
+<%- include('partials/footer') %>
