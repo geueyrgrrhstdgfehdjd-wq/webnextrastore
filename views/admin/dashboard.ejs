@@ -1,0 +1,26 @@
+<%- include('../partials/header') %>
+<div class="max-w-7xl mx-auto px-4 py-6">
+  <h1 class="text-2xl font-bold mb-6 flex items-center gap-2"><i data-lucide="shield" class="w-6 h-6 text-red-400"></i>แผงควบคุมแอดมิน</h1>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+    <div class="stat-card text-left"><div class="text-2xl font-bold"><%= totalUsers %></div><div class="text-xs text-gray-500">สมาชิก</div></div>
+    <div class="stat-card text-left"><div class="text-2xl font-bold"><%= totalSold %></div><div class="text-xs text-gray-500">ขายแล้ว</div></div>
+    <div class="stat-card text-left"><div class="text-2xl font-bold">฿<%= totalRevenue.toFixed(0) %></div><div class="text-xs text-gray-500">เติมเงินรวม</div></div>
+    <div class="stat-card text-left"><div class="text-2xl font-bold"><%= uniqueVisitors %></div><div class="text-xs text-gray-500">ผู้เข้าชม</div></div>
+    <div class="stat-card text-left"><div class="text-2xl font-bold">฿<%= totalPurchases.toFixed(0) %></div><div class="text-xs text-gray-500">ยอดขายรวม</div></div>
+    <div class="stat-card text-left"><div class="text-2xl font-bold"><%= todayVisits %></div><div class="text-xs text-gray-500">เข้าชมวันนี้</div></div>
+    <div class="stat-card text-left"><div class="text-2xl font-bold">฿<%= todayTopup.toFixed(0) %></div><div class="text-xs text-gray-500">เติมวันนี้</div></div>
+    <div class="stat-card text-left"><div class="text-2xl font-bold"><%= totalAdmins %></div><div class="text-xs text-gray-500">แอดมิน</div></div>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+    <a href="/admin/web-settings" class="admin-menu highlight"><i data-lucide="settings-2" class="w-6 h-6 text-purple-400"></i><span>ตั้งค่าระบบเว็บ</span><span class="menu-badge">ใหม่</span></a>
+    <a href="/admin/settings" class="admin-menu"><i data-lucide="palette" class="w-6 h-6 text-pink-400"></i><span>ตั้งค่า UI</span></a>
+    <a href="/admin/ranks" class="admin-menu"><i data-lucide="crown" class="w-6 h-6 text-yellow-400"></i><span>ตั้งค่ายศ</span></a>
+    <a href="/admin/products" class="admin-menu"><i data-lucide="package" class="w-6 h-6 text-green-400"></i><span>ตั้งค่าสินค้า</span></a>
+    <a href="/admin/categories" class="admin-menu"><i data-lucide="folder" class="w-6 h-6 text-blue-400"></i><span>หมวดหมู่</span></a>
+    <a href="/admin/stock" class="admin-menu"><i data-lucide="boxes" class="w-6 h-6 text-orange-400"></i><span>ตั้งค่าสต็อก</span></a>
+    <a href="/admin/users" class="admin-menu"><i data-lucide="users" class="w-6 h-6 text-cyan-400"></i><span>จัดการสมาชิก</span></a>
+    <a href="/shop" class="admin-menu"><i data-lucide="store" class="w-6 h-6 text-purple-400"></i><span>หน้าร้าน</span></a>
+    <a href="/logout" class="admin-menu"><i data-lucide="log-out" class="w-6 h-6 text-red-400"></i><span>ออกระบบ</span></a>
+  </div>
+</div>
+<%- include('../partials/footer') %>
