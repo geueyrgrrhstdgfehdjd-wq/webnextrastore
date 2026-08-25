@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+<div class="max-w-3xl mx-auto px-4 py-6">
+  <h1 class="text-2xl font-bold mb-6">หมวดหมู่</h1>
+  <div class="card p-6 mb-6">
+    <form action="/admin/categories/add" method="POST" class="grid grid-cols-3 gap-3">
+      <input type="text" name="name" required placeholder="ชื่อ" class="input">
+      <input type="text" name="icon" placeholder="icon" value="box" class="input">
+      <input type="number" name="sort_order" value="0" class="input">
+      <button type="submit" class="btn-primary col-span-3">เพิ่ม</button>
+    </form>
+  </div>
+  <% categories.forEach(c => { %>
+    <div class="card p-4 mb-3 flex items-center gap-3">
+      <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center"><i data-lucide="<%= c.icon||'box' %>" class="w-5 h-5 text-purple-400"></i></div>
+      <form action="/admin/categories/edit/<%= c.id %>" method="POST" class="flex-1 grid grid-cols-3 gap-2">
+        <input type="text" name="name" value="<%= c.name %>" class="input text-sm">
+        <input type="text" name="icon" value="<%= c.icon %>" class="input text-sm">
+        <input type="number" name="sort_order" value="<%= c.sort_order %>" class="input text-sm">
+      </form>
+      <button type="button" onclick="document.querySelector('form[action*=categories/edit/<%= c.id %>]').submit()" class="btn-primary text-sm">บันทึก</button>
+      <button type="button" onclick="if(confirm('ลบ?')){const f=document.createElement('form');f.method='POST';f.action='/admin/categories/delete/<%= c.id %>';document.body.appendChild(f);f.submit();}" class="btn-danger text-sm">ลบ</button>
+    </div>
+  <% }); %>
+</div>
+<%- include('../partials/footer') %>
