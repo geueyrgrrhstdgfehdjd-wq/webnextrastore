@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+<div class="landing">
+  <div class="bg-pattern bg-pattern-<%= settings.effect_background_pattern || 'grid' %>"></div>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="landing-container">
+    <div class="hero-badge"><span class="hero-pulse"></span><span>ระบบพร้อมให้บริการ</span></div>
+    <h1 class="hero-title"><span class="gradient-text"><%= settings.shop_name %></span></h1>
+    <% if (settings.show_shop_description !== '0') { %><p class="hero-desc"><%= settings.shop_description %></p><% } %>
+    <div class="hero-cta">
+      <% if (!user) { %>
+        <a href="/enter" class="btn-primary"><span>เข้าสู่ร้านค้า</span><i data-lucide="arrow-right" class="w-5 h-5"></i></a>
+        <% if (settings.show_register_button !== '0') { %><a href="/register" class="btn-ghost"><i data-lucide="user-plus" class="w-5 h-5"></i><span>สมัครสมาชิก</span></a><% } %>
+      <% } else { %><a href="/shop" class="btn-primary"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span>เข้าชมร้านค้า</span></a><% } %>
+    </div>
+    <% if (settings.show_visits !== '0') { %>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-icon" style="color:var(--primary)"><i data-lucide="users" class="w-5 h-5"></i></div><div><div class="hero-stat-value" id="s-users">-</div><div class="hero-stat-label">สมาชิก</div></div></div>
+      <div class="hero-stat"><div class="hero-stat-icon" style="color:var(--accent)"><i data-lucide="package" class="w-5 h-5"></i></div><div><div class="hero-stat-value" id="s-sold">-</div><div class="hero-stat-label">ขายแล้ว</div></div></div>
+      <div class="hero-stat"><div class="hero-stat-icon" style="color:var(--secondary)"><i data-lucide="eye" class="w-5 h-5"></i></div><div><div class="hero-stat-value" id="s-visits">-</div><div class="hero-stat-label">ผู้เข้าชม</div></div></div>
+    </div>
+    <% } %>
+  </div>
+</div>
+<script>fetch('/api/stats').then(r=>r.json()).then(d=>{document.getElementById('s-users').textContent=d.totalUsers;document.getElementById('s-sold').textContent=d.totalSold;document.getElementById('s-visits').textContent=d.uniqueVisitors;});</script>
+<%- include('partials/footer') %>
