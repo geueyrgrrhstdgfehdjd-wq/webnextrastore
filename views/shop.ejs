@@ -1,0 +1,43 @@
+<%- include('partials/header') %>
+<div class="shop-page" style="--cols-d:<%=settings.product_columns_desktop||5%>;--cols-t:<%=settings.product_columns_tablet||3%>;--cols-m:<%=settings.product_columns_mobile||2%>;--ratio:<%=settings.product_image_ratio||1%>;">
+  <div class="shop-header">
+    <div>
+      <h1 class="page-title"><i data-lucide="store" class="w-6 h-6" style="color:var(--primary)"></i><%= settings.shop_name %></h1>
+      <% if (settings.show_balance !== '0') { %><p class="page-subtitle">ยอดเงิน: <span style="color:var(--primary);font-weight:700">฿<%= user.balance.toFixed(2) %></span></p><% } %>
+    </div>
+  </div>
+  <% if (shopClosed) { %>
+    <div class="empty-state"><i data-lucide="lock" class="w-16 h-16"></i><h2>ร้านค้าปิดให้บริการ</h2></div>
+  <% } else if (products.length === 0) { %>
+    <div class="empty-state"><i data-lucide="package-x" class="w-16 h-16"></i><h2>ยังไม่มีสินค้า</h2></div>
+  <% } else { %>
+    <% if (categories.length > 0 && settings.show_categories_filter !== '0') { %>
+    <div class="cat-filter">
+      <button class="cat-chip active" data-cat="all"><i data-lucide="layout-grid" class="w-4 h-4"></i> ทั้งหมด</button>
+      <% categories.forEach(c => { %><button class="cat-chip" data-cat="<%= c.id %>"><i data-lucide="<%= c.icon||'box' %>" class="w-4 h-4"></i> <%= c.name %></button><% }); %>
+    </div>
+    <% } %>
+    <div class="product-grid">
+      <% products.forEach(p => { %>
+        <div class="product-card" data-cat="<%= p.category_id||'none' %>">
+          <div class="product-image">
+            <% if (p.image) { %><img src="<%= p.image %>"><% } else { %><div class="product-image-placeholder"><i data-lucide="image" class="w-12 h-12"></i></div><% } %>
+            <% if (settings.product_out_of_stock_overlay !== '0' && p.stock < 1) { %><div class="product-overlay"><span class="badge badge-danger">หมด</span></div><% } %>
+          </div>
+          <div class="product-body">
+            <h3 class="product-name"><%= p.name %></h3>
+            <% if (settings.product_show_category !== '0' && p.category_name) { %><p class="product-category"><%= p.category_name %></p><% } %>
+            <div class="product-footer">
+              <% if (settings.product_show_price !== '0') { %><span class="product-price">฿<%= p.price.toFixed(2) %></span><% } %>
+              <% if (p.stock > 0) { %><form action="/buy/<%= p.id %>" method="POST" class="product-buy-form"><button type="submit" class="buy-btn"><i data-lucide="shopping-cart" class="w-4 h-4"></i></button></form><% } %>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  <% } %>
+</div>
+<script>
+document.querySelectorAll('.cat-chip').forEach(chip=>{chip.addEventListener('click',()=>{document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active'));chip.classList.add('active');const cat=chip.dataset.cat;document.querySelectorAll('.product-card').forEach(card=>{card.style.display=(cat==='all'||card.dataset.cat===cat)?'':'none'});});});
+</script>
+<%- include('partials/footer') %>
