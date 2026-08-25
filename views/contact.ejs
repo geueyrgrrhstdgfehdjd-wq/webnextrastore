@@ -1,0 +1,11 @@
+<%- include('partials/header') %>
+<div class="max-w-lg mx-auto px-4 py-6 pb-24">
+  <div class="text-center mb-6">
+    <div class="inline-flex w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 items-center justify-center mb-4"><i data-lucide="message-circle" class="w-8 h-8 text-white"></i></div>
+    <h1 class="text-2xl font-bold">ติดต่อแอดมิน</h1>
+  </div>
+  <div class="space-y-3">
+    <% if (settings.contact_line) { %><a href="https://line.me/ti/p/<%= settings.contact_line.replace('@','') %>" target="_blank" class="contact-card"><div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center"><i data-lucide="message-square" class="w-6 h-6 text-green-400"></i></div><div class="flex-1"><div class="font-medium">LINE</div><div class="text-sm text-gray-400"><%= settings.contact_line %></div></div></a><% } %>
+  </div>
+</div>
+<%- include('partials/footer') %>
