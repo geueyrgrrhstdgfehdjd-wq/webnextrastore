@@ -1,0 +1,17 @@
+<%- include('../partials/header') %>
+<div class="max-w-4xl mx-auto px-4 py-6">
+  <h1 class="text-2xl font-bold mb-6">ตั้งค่าสต็อก</h1>
+  <% products.forEach(p => { %>
+    <div class="card p-3 mb-2 flex items-center gap-3">
+      <div class="w-12 h-12 rounded-lg overflow-hidden bg-white/5 flex-shrink-0"><% if (p.image) { %><img src="<%= p.image %>" class="w-full h-full object-cover"><% } else { %><div class="w-full h-full flex items-center justify-center"><i data-lucide="image" class="w-5 h-5 text-gray-600"></i></div><% } %></div>
+      <div class="flex-1"><div class="font-medium text-sm"><%= p.name %></div></div>
+      <form action="/admin/stock/update/<%= p.id %>" method="POST" class="flex items-center gap-2">
+        <input type="number" name="adjustment" placeholder="+/-" class="input text-sm w-24" value="0">
+        <input type="number" name="stock" value="<%= p.stock %>" class="input text-sm w-20">
+        <button type="submit" class="btn-primary text-sm">บันทึก</button>
+      </form>
+      <div class="text-sm text-right min-w-[60px]"><% if (p.stock<1) { %><span class="text-red-400">หมด</span><% } else { %><span class="text-green-400"><%= p.stock %></span><% } %></div>
+    </div>
+  <% }); %>
+</div>
+<%- include('../partials/footer') %>
