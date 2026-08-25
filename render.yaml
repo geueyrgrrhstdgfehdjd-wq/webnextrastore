@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: nextrastore
+    runtime: node
+    plan: starter
+    region: singapore
+    branch: main
+    buildCommand: npm install && npm run seed
+    startCommand: node server.js
+    healthCheckPath: /
+    disk:
+      name: nextrastore-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DATA_DIR
+        value: /opt/render/project/src/data
