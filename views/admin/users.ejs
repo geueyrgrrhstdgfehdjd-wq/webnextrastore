@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+<div class="max-w-5xl mx-auto px-4 py-6">
+  <h1 class="text-2xl font-bold mb-6">จัดการสมาชิก</h1>
+  <div class="card p-6 mb-6">
+    <form action="/admin/users/add" method="POST" class="grid grid-cols-2 md:grid-cols-3 gap-3">
+      <input type="text" name="username" required placeholder="ชื่อผู้ใช้" class="input">
+      <input type="text" name="password" required placeholder="รหัสผ่าน" class="input">
+      <select name="role" class="input"><option value="member">สมาชิก</option><option value="admin">แอดมิน</option></select>
+      <input type="number" name="balance" placeholder="ยอดเงิน" value="0" class="input" step="0.01">
+      <select name="rank_id" class="input"><option value="">-- ไม่มียศ --</option><% ranks.forEach(r => { %><option value="<%= r.id %>"><%= r.name %></option><% }); %></select>
+      <button type="submit" class="btn-primary col-span-3">เพิ่ม</button>
+    </form>
+  </div>
+  <% users.forEach(u => { %>
+    <div class="card p-4 mb-3">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center"><i data-lucide="user" class="w-5 h-5 text-white"></i></div>
+        <div class="flex-1">
+          <div class="font-medium"><%= u.username %> <% if (u.role==='admin') { %><span class="text-red-400 text-xs">ADMIN</span><% } %></div>
+          <div class="text-xs text-gray-500">฿<%= u.balance.toFixed(2) %></div>
+        </div>
+      </div>
+      <form action="/admin/users/edit/<%= u.id %>" method="POST" class="grid grid-cols-2 md:grid-cols-5 gap-2">
+        <input type="text" name="username" value="<%= u.username %>" class="input text-sm" required>
+        <select name="role" class="input text-sm"><option value="member" <%=u.role==='member'?'selected':''%>>สมาชิก</option><option value="admin" <%=u.role==='admin'?'selected':''%>>แอดมิน</option></select>
+        <input type="number" name="balance" value="<%= u.balance %>" class="input text-sm" step="0.01">
+        <select name="rank_id" class="input text-sm"><option value="">--</option><% ranks.forEach(r => { %><option value="<%= r.id %>" <%=u.rank_id===r.id?'selected':''%>><%= r.name %></option><% }); %></select>
+        <div class="flex gap-1">
+          <button type="submit" class="btn-primary text-sm flex-1">บันทึก</button>
+          <button type="button" onclick="const p=prompt('รหัสใหม่');if(p){const f=document.createElement('form');f.method='POST';f.action='/admin/users/password/<%= u.id %>';const i=document.createElement('input');i.name='password';i.value=p;f.appendChild(i);document.body.appendChild(f);f.submit();}" class="btn-secondary text-sm">รหัส</button>
+          <button type="button" onclick="if(confirm('ลบ?')){const f=document.createElement('form');f.method='POST';f.action='/admin/users/delete/<%= u.id %>';document.body.appendChild(f);f.submit();}" class="btn-danger text-sm">ลบ</button>
+        </div>
+      </form>
+    </div>
+  <% }); %>
+</div>
+<%- include('../partials/footer') %>
